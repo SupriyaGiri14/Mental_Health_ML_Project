@@ -1,0 +1,91 @@
+import streamlit as st
+import numpy as np
+import pandas as pd
+import pickle
+
+# ---------------------------
+# LOAD MODEL
+# ---------------------------
+model = pickle.load(open("model.pkl", "rb"))
+
+# ---------------------------
+# PAGE CONFIG
+# ---------------------------
+st.set_page_config(page_title="Mental Health Predictor", page_icon="🧠", layout="centered")
+
+st.title("🧠 Mental Health / Stress Level Predictor")
+st.write("Answer the questions below to predict your stress level using Machine Learning.")
+
+st.markdown("---")
+
+# ---------------------------
+# USER INPUT FORM
+# ---------------------------
+
+sleep = st.slider("😴 Hours of Sleep per day", 0, 12, 6)
+
+work_hours = st.slider("💼 Work/Study Hours per day", 0, 16, 8)
+
+stress_level_input = st.selectbox(
+    "⚡ Current Stress Level (self-reported)",
+    ["Low", "Medium", "High"]
+)
+
+financial_stress = st.selectbox(
+    "💰 Financial Stress",
+    ["Low", "Medium", "High"]
+)
+
+social_support = st.selectbox(
+    "🤝 Social Support",
+    ["Low", "Medium", "High"]
+)
+
+physical_activity = st.slider("🏃 Physical Activity (hours/week)", 0, 14, 3)
+
+age = st.slider("🎂 Age", 10, 80, 25)
+
+# ---------------------------
+# ENCODING CATEGORICAL VALUES
+# ---------------------------
+
+def encode(val):
+    mapping = {"Low": 0, "Medium": 1, "High": 2}
+    return mapping[val]
+
+stress_level = encode(stress_level_input)
+financial_stress = encode(financial_stress)
+social_support = encode(social_support)
+
+# ---------------------------
+# PREDICTION BUTTON
+# ---------------------------
+
+if st.button("🔍 Predict Stress Level"):
+
+    # Create input array (ORDER MUST MATCH TRAINING DATA)
+    input_data = np.array([[sleep, work_hours, stress_level,
+                            financial_stress, social_support,
+                            physical_activity, age]])
+
+    prediction = model.predict(input_data)[0]
+
+    # If classification model
+    if prediction == 0:
+        result = "🟢 Low Stress"
+    elif prediction == 1:
+        result = "🟡 Medium Stress"
+    else:
+        result = "🔴 High Stress"
+
+    st.subheader("Prediction Result:")
+    st.success(result)
+
+    # Optional probability display (if supported)
+    if hasattr(model, "predict_proba"):
+        proba = model.predict_proba(input_data)[0]
+        st.write("Prediction Confidence:")
+        st.write(proba)
+
+st.markdown("---")
+st.caption("Built with ❤️ using Streamlit + Machine Learning")
