@@ -76,12 +76,14 @@ st.markdown("""
 
 # 2. Left Side Content (Sidebar)
 with st.sidebar:
-    st.image("https://img.icons8.com/ios-filled/100/ffffff/brain.png", width=40)
+    st.image("https://img.icons8.com/ios-filled/100/ffffff/brain.png", width=30)
     #st.title("Project Details")
     st.markdown("---")
     st.subheader("📊 **Model:** RandomForestClassifier")
-    st.subheader("🎯 **Goal:** Early Stress Detection")
-    st.subheader("🏢 **Sector:** Workplace Wellness")
+    st.subheader("🎯 **Goal:**")
+    st.subheader("Early Stress Detection")
+    st.subheader("🏢 **Sector:**")
+    st.subheader("Workplace Wellness")
 
 # 3. Main Body Content
 st.title("Employee Mental Health Treatment  Required?")
