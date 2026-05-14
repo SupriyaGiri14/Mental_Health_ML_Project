@@ -1,11 +1,14 @@
 import streamlit as st
 import pandas as pd
 import joblib
-from function_file import standardize_columns, normalize_data
+from function_file import standardize_columns, normalize_data, one_hot_encoding
+import time
+
 
 # 1. Load the saved model
 model = joblib.load('tech_survey_model.pkl')
 scaler = joblib.load('scaler.pkl')
+encoder = joblib.load('encoder.pkl')
 
 try:
     model = joblib.load('tech_survey_model.pkl')
@@ -74,14 +77,14 @@ st.markdown("""
 # 2. Left Side Content (Sidebar)
 with st.sidebar:
     st.image("https://img.icons8.com/ios-filled/100/ffffff/brain.png", width=40)
-    st.title("Project Details")
+    #st.title("Project Details")
     st.markdown("---")
-    st.subheader("📊 **Model:** Random Forest / XGBoost")
+    st.subheader("📊 **Model:** knn")
     st.subheader("🎯 **Goal:** Early Stress Detection")
     st.subheader("🏢 **Sector:** Workplace Wellness")
 
 # 3. Main Body Content
-st.title("Mental Health/Stress Prediction")
+st.title("Employee Mental Health Treatment  Required?")
 st.subheader("Predicting Well-being through Machine Learning")
 
 # ------------------------------
@@ -105,7 +108,7 @@ def ask_question(text):
 
 # 1. Work Interference (The most important question)
 # We use a selectbox because the categories are specific
-work_interfere_label = "How soften does your mental health interfere with your work?"
+work_interfere_label = "How often does your mental health interfere with your work?"
 work_interfere_text = st.selectbox(
     work_interfere_label,
     ["Never", "Rarely", "Sometimes", "Often"]
@@ -146,26 +149,39 @@ if st.button("Predict"):
     input_data = pd.DataFrame({
         'phys_health_consequence': [phys_health_text],
         'coworkers': [coworkers_text],
-        'work_interfere': [work_interfere_text],
         'family_history': [family_history_text],
         'benefits': [benefits_text],
-        'Age': [age]
+        'Age': [age],
+        'work_interfere': [work_interfere_text]
      })
    # Clean the strings to numbers
-    cleaned_df = standardize_columns(input_data)
-    
+    #cleaned_df = standardize_columns(input_data)
+    with st.spinner("Processing..."):
+        time.sleep(1)
+    cleaned_df = one_hot_encoding(input_data, encoder)
+    st.success("Encoding of data done!!")
+
+    with st.spinner("Processing..."):
+        time.sleep(1)
     try:
         # Since 'input_data' already has numbers from your UI logic, 
         # we can go straight to normalization
         normalized_df = normalize_data(cleaned_df, scaler)
-        
+        st.success("Normalization of data done!!")
+
+        with st.spinner("Processing..."):
+            time.sleep(1)
         # 3. Predict
         prediction = model.predict(normalized_df)
-
+        st.success("Model ran for your data!!")
+        with st.spinner("Processing..."):
+            time.sleep(1)
         if prediction[0] == 1:
-            st.error("Result: Seeking treatment is likely recommended.")
+            message = f"Result: {name }, Seeking treatment is likely recommended."
+            st.error(message)
         else:
-            st.success("Result: Seeking treatment is likely not required.")
+            message = f"Result: {name} , Seeking treatment is likely not required."
+            st.success(message)
             
     except Exception as e:
         st.error(f"Prediction Error: {e}")

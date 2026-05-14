@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.preprocessing import OneHotEncoder
 
 # Create a copy to keep your original data safe
 def standardize_columns(X_train):
@@ -25,6 +26,14 @@ def standardize_columns(X_train):
 
     return df_encoded
 
+def one_hot_encoding(X_train, encoder):
+    color_encoded = encoder.transform(X_train[["work_interfere","family_history","benefits","phys_health_consequence","coworkers"]])
+    df = pd.DataFrame(color_encoded, columns=encoder.get_feature_names_out(["work_interfere","family_history","benefits","phys_health_consequence","coworkers"]))
+    X_train = X_train.reset_index(drop=True)
+    df = df.reset_index(drop=True)
+    df = pd.concat([X_train, df], axis=1).reset_index(drop=True)
+    df = df.drop(columns=["work_interfere","family_history","benefits","phys_health_consequence","coworkers"])
+    return df
 
 def normalize_data(df, normalizer):
     X_train_norm = normalizer.transform(df)
