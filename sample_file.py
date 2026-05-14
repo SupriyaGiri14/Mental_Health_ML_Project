@@ -79,7 +79,7 @@ with st.sidebar:
     st.image("https://img.icons8.com/ios-filled/100/ffffff/brain.png", width=40)
     #st.title("Project Details")
     st.markdown("---")
-    st.subheader("📊 **Model:** knn")
+    st.subheader("📊 **Model:** RandomForestClassifier")
     st.subheader("🎯 **Goal:** Early Stress Detection")
     st.subheader("🏢 **Sector:** Workplace Wellness")
 
@@ -162,7 +162,7 @@ if st.button("Predict"):
     st.success("Encoding of data done!!")
 
     with st.spinner("Processing..."):
-        time.sleep(1)
+        time.sleep(2)
     try:
         # Since 'input_data' already has numbers from your UI logic, 
         # we can go straight to normalization
@@ -170,7 +170,7 @@ if st.button("Predict"):
         st.success("Normalization of data done!!")
 
         with st.spinner("Processing..."):
-            time.sleep(1)
+            time.sleep(2)
         # 3. Predict
         prediction = model.predict(normalized_df)
         st.success("Model ran for your data!!")
