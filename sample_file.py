@@ -80,8 +80,8 @@ with st.sidebar:
     #st.title("Project Details")
     st.markdown("---")
     st.subheader("📊 **Model:** RandomForestClassifier")
-    st.subheader("🎯 **Goal:**Early Stress Detection")
-    st.subheader("🏢 **Sector:**Workplace Wellness")
+    st.subheader("🎯 **Goal:** Early Stress Detection")
+    st.subheader("🏢 **Sector:** Workplace Wellness")
 
 
 # 3. Main Body Content
