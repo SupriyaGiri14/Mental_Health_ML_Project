@@ -80,10 +80,9 @@ with st.sidebar:
     #st.title("Project Details")
     st.markdown("---")
     st.subheader("📊 **Model:** RandomForestClassifier")
-    st.subheader("🎯 **Goal:**")
-    st.subheader("Early Stress Detection")
-    st.subheader("🏢 **Sector:**")
-    st.subheader("Workplace Wellness")
+    st.subheader("🎯 **Goal:**Early Stress Detection")
+    st.subheader("🏢 **Sector:**Workplace Wellness")
+
 
 # 3. Main Body Content
 st.title("Employee Mental Health Treatment  Required?")
