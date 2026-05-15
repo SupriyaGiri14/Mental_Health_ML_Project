@@ -160,7 +160,7 @@ if st.button("Predict"):
     with st.spinner("Processing..."):
         time.sleep(1)
     cleaned_df = one_hot_encoding(input_data, encoder)
-    st.success("Encoding of data done!!")
+    st.success("Encoding of data done!")
 
     with st.spinner("Processing..."):
         time.sleep(2)
@@ -168,13 +168,13 @@ if st.button("Predict"):
         # Since 'input_data' already has numbers from your UI logic, 
         # we can go straight to normalization
         normalized_df = normalize_data(cleaned_df, scaler)
-        st.success("Normalization of data done!!")
+        st.success("Normalization of data done!")
 
         with st.spinner("Processing..."):
             time.sleep(2)
         # 3. Predict
         prediction = model.predict(normalized_df)
-        st.success("Model ran for your data!!")
+        st.success("Model ran for your data!")
         with st.spinner("Processing..."):
             time.sleep(1)
         if prediction[0] == 1:
