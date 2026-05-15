@@ -85,7 +85,7 @@ with st.sidebar:
 
 
 # 3. Main Body Content
-st.title("Employee Mental Health Treatment  Required?")
+st.title("Mental Health Treatment?")
 st.subheader("Predicting Well-being through Machine Learning")
 
 # ------------------------------
