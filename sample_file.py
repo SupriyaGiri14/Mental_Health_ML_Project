@@ -178,16 +178,10 @@ if st.button("Predict"):
         with st.spinner("Processing..."):
             time.sleep(1)
         if prediction[0] == 1:
-            message = f"Prediction: {name }, Seeking treatment is likely recommended."
+            message = f"Prediction: {name },  Seeking treatment is likely recommended."
             st.error(message)
-            st.markdown(f"""
-                ### Prediction Result
-                **Name:** {name}
-
-                Seeking treatment is likely recommended.
-                """)
         else:
-            message = f"Prediction: {name} , Seeking treatment is likely not required."
+            message = f"Prediction: {name} ,   Seeking treatment is likely not required."
             st.success(message)
             
     except Exception as e:
