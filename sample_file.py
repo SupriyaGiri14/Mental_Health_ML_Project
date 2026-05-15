@@ -192,5 +192,4 @@ st.write("---")
 st.warning(
     "⚠️ **Disclaimer**: This tool is for educational and awareness purposes only. "
     "It does NOT provide medical advice or diagnosis. "
-    "If you are experiencing distress, please consult a qualified mental health professional."
 )
